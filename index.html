@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>R.Amorim - Engenharia(Landing Page Completa)-</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@next/dist/aos.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css">
+    <link rel="stylesheet" href="/styles/styles.css"> <!-- Adicione seu CSS customizado aqui -->
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <img src="src/img/R.Amorim-Engenharia2.png" alt="Logo da Empresa" class="logo">
+            <nav>
+                <ul>
+                    <li><a href="#sobre">Sobre</a></li>
+                    <li><a href="#servicos">Serviços</a></li>
+                    <li><a href="#testemunhos">Testemunhos</a></li>
+                    <li><a href="#contato">Contato</a></li>
+                </ul>
+            </nav>
+            <a href="#contato" class="cta">Entre em Contato</a>
+        </div>
+    </header>
+
+    <!-- Banner Principal (Slider) -->
+    <section class="banner">
+        <div class="container">
+            <div class="swiper-container">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide"> 
+                        <img src="src/img/foto-r-amorim-servicos02.jpg" alt="Imagem 1">
+                        <h2>Serviço 1</h2>
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="src/img/foto-r-amorim-servicos03.png" alt="Imagem 2">
+                        <h2>Serviço 2</h2>
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="src/img/foto-r-amorim-servicos05.jpg" alt="Imagem 3">
+                        <h2>Serviço 3</h2>
+                    </div>
+                </div>
+                <!-- Botões de navegação -->
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+                <!-- Indicadores -->
+                <div class="swiper-pagination"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Seção Sobre -->
+    <section id="sobre" class="sobre">
+        <div class="container">
+            <h2>Sobre Nós</h2>
+            <p>Somos uma empresa dedicada a fornecer os melhores serviços para nossos clientes, com qualidade e eficiência.</p>
+        </div>
+    </section>
+
+    <!-- Seção Serviços -->
+    <section id="servicos" class="servicos">
+        <div class="container">
+            <h2>Nossos Serviços</h2>
+            <div id="servicos-container" class="servicos-container">
+                <!-- Conteúdo carregado pela API -->
+            </div>
+            <button id="loadMoreBtn">Carregar Mais</button> <!-- Botão para carregar mais serviços -->
+        </div>
+    </section>
+
+    <!-- Seção Testemunhos -->
+    <section id="testemunhos" class="testemunhos">
+        <div class="container">
+            <h2>O que nossos clientes dizem</h2>
+            <div id="testemunhos-container" class="testemunhos-container">
+                <!-- Testemunhos carregados pela API -->
+            </div>
+            <button id="loadMoreTestimonialsBtn">Carregar Mais</button> <!-- Botão para carregar mais depoimentos -->
+        </div>
+    </section>
+
+    <!-- Seção Contato -->
+    <section id="contato" class="contato">
+        <div class="container">
+            <h2>Fale Conosco</h2>
+            <form id="contatoForm">
+                <div class="form-group">
+                    <input type="text" name="nome" placeholder="Nome" required>
+                </div>
+                <div class="form-group">
+                    <input type="email" name="email" placeholder="Email" required>
+                </div>
+                <div class="form-group">
+                    <input type="tel" name="telefone" placeholder="Telefone">
+                </div>
+                <div class="form-group">
+                    <textarea name="mensagem" placeholder="Mensagem" required></textarea>
+                </div>
+                <button type="submit">Enviar</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <ul>
+                <li><a href="https://www.instagram.com/r.amorim_engenharia/" target="_blank">Instagram</a></li>
+                <li><a href="https://wa.me/5511999999999" target="_blank">WhatsApp</a></li> <!-- Altere o número para o correto -->
+            </ul>
+            <p>© 2024 R. Amorim Engenharia | <a href="#">Termos de Uso</a> | <a href="#">Política de Privacidade</a></p>
+        </div>
+    </footer>
+
+    <!-- Bibliotecas Externas -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/aos@next/dist/aos.js"></script>
+
+    <!-- Scripts Customizados -->
+    <script>
+        // Inicialização do Swiper.js
+        var swiper = new Swiper('.swiper-container', {
+            loop: true,
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+        });
+
+        // Inicialização do AOS.js
+        AOS.init({
+            duration:800,
+            easing:'ease-in-out',
+        });
+
+        // Consumo de API para a Seção de Serviços
+        fetch('https://jsonplaceholder.typicode.com/comments?_limit=10') // Limita a 10 serviços
+        .then(response => response.json())
+        .then(data => {
+            let servicosContainer = document.getElementById('servicos-container');
+            data.forEach(servico => {
+                servicosContainer.innerHTML += `
+                    <div class="card">
+                        <h3>${servico.name}</h3>
+                        <p>${servico.body}</p>
+                    </div>`;
+            });
+        })
+        .catch(error => console.error('Erro ao carregar os serviços', error));
+
+        // Carregar mais serviços
+        let loadMoreBtn = document.getElementById('loadMoreBtn');
+        let offset = 10;
+
+        loadMoreBtn.addEventListener('click', function() {
+            fetch(`https://jsonplaceholder.typicode.com/comments?_start=${offset}&_limit=10`)
+                .then(response => response.json())
+                .then(data => {
+                    let servicosContainer = document.getElementById('servicos-container');
+                    data.forEach(servico => {
+                        servicosContainer.innerHTML += `
+                            <div class="card">
+                                <h3>${servico.name}</h3>
+                                <p>${servico.body}</p>
+                            </div>`;
+                    });
+                    offset += 10;
+                })
+                .catch(error => console.error('Erro ao carregar mais serviços', error));
+        });
+
+        // Consumo de API para a Seção de Testemunhos
+        fetch('https://jsonplaceholder.typicode.com/users?_limit=10') // Limita a 10 testemunhos
+        .then(response => response.json())
+        .then(data => {
+            let testemunhosContainer = document.getElementById('testemunhos-container');
+            data.forEach(testemunho => {
+                testemunhosContainer.innerHTML += `
+                    <div class="testemunho" data-aos="fade-up">
+                        <img src="https://randomuser.me/api/portraits/men/${testemunho.id}.jpg" alt="Foto do Cliente">
+                        <p>"${testemunho.company.name} é excelente!"</p>
+                        <p><strong>${testemunho.name}</strong></p>
+                    </div>`;
+            });
+        })
+        .catch(error => console.error('Erro ao carregar os testemunhos', error));
+
+        // Carregar mais testemunhos
+        let loadMoreTestimonialsBtn = document.getElementById('loadMoreTestimonialsBtn');
+        let testimonialOffset = 10;
+
+        loadMoreTestimonialsBtn.addEventListener('click', function() {
+            fetch(`https://jsonplaceholder.typicode.com/users?_start=${testimonialOffset}&_limit=10`)
+                .then(response => response.json())
+                .then(data => {
+                    let testemunhosContainer = document.getElementById('testemunhos-container');
+                    data.forEach(testemunho => {
+                        testemunhosContainer.innerHTML += `
+                            <div class="testemunho" data-aos="fade-up">
+                                <img src="https://randomuser.me/api/portraits/men/${testemunho.id}.jpg" alt="Foto do Cliente">
+                                <p>"${testemunho.company.name} é excelente!"</p>
+                                <p><strong>${testemunho.name}</strong></p>
+                            </div>`;
+                    });
+                    testimonialOffset += 10;
+                })
+                .catch(error => console.error('Erro ao carregar mais testemunhos', error));
+        });
+    </script>
+</body>
+</html>
