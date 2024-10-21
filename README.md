@@ -1,4 +1,4 @@
-# Atividade A4 de Arthur Dué: R. Amorim Engenharia - Landing Page
+# Atividade 4 de Arthur Dué: R. Amorim Engenharia - Landing Page
 
 ## Descrição
 
